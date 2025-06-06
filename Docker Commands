@@ -2,7 +2,7 @@
    	Example: docker run -d --name mycont -p 90:80 -it mycontimage /bin/bash
 
 2. 	Create .tar file:		--> 	docker export container_id > filename.tar
-								OR	docker export container_id -o filename.tar
-														|
-									Will create as snapshot
+					OR	docker export container_id -o filename.tar
+								|
+						 	Will create as snapshot
    
