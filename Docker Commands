@@ -6,3 +6,154 @@
 								|
 						 	Will create as snapshot
    
+Launch a server -- ubuntu -- AWS
+Here ubuntu is also an AMI on AWS, which helps you to create server.
+
+
+
+For docker every time you need sudo permission.
+
+So either you use "sudo" before every command or
+Once do "sudo su"
+
+
+Then use…
+
+INSTALLATION:
+
+
+
+If you don't want to see dockerhub on site, then you can search available images in docker using commands:
+
+docker search <image-name>
+docker search nginx
+
+	---------------> here nginx is also a image, someone might have taken server created nginx and created an image, so world can use it.
+Similarly, like in AWS we select, Ubuntu OS during EC2 launch, but somebody created that AMI of ubuntu and so it is available now for world.
+
+If we want to take that image, istall in our system, need to pull
+
+docker pull <image name>
+docker pull nginx
+
+you can check images on your system
+docker image ls
+or
+docker images
+
+
+to pull image
+
+docker pull <image-name>
+docker pull nginx
+
+
+
+To create container using pulled image: 
+
+docker run <image-id>
+OR
+docker run <image-name>
+
+docker run nginx
+
+
+
+OR
+
+you can check id using
+docker images
+"copy id from there "
+and 
+docker run 41f689c20910
+-- Here we have not given any name to container, so it will generate random name.
+
+Now container is created, but it is running in FOREGROUND. You won't able to do any other operation.
+Once you try, you will exit from current running container, and this container will be stopped.
+
+Ctrl +c = exit from running container
+==================================================================
+
+check here containers
+(Old commands)
+docker ps
+it will show nothing as no running container. So to show all containers in whatever state they are, use
+docker ps -a
+
+
+(New Commands - very easy and specific)
+docker container ls
+docker container ls -a
+
+=========================================================
+
+SO
+now to keep container running even in background
+
+docker run -d <image-name>
+docker run -d nginx
+
+If you want to give name to container and keep running in background
+docker run -d --name  <name_of_container>  <image-name or image-id>
+docker run -d --name  mynginx  nginx
+OR
+docker run -d --name  mynginx 41f689c20910
+
+
+
+So new container name will be "mynginx"
+
+=================================================================================================================================
+
+TO go inside container
+docker exec -it <container-id or container-name> /bin/bash
+
+You are in!
+
+=================================================================================================================================
+Let's see our normal operation!
+Suppose we have html code, then to host it we have to create file inside nginx server --> inside path /usr/share/nginx/html/________
+So suppose we want to create hello.html  here.
+We have to write code using nano. But in docker, we use containers, and for that when we install nginx in container using pull --> It doesn't pull everything -> it pull necessary environment or basic OS only -- > and basic command(e.g. touch)
+
+To use extra package, you have to install.
+So nano directly won't work.
+First tell docker to install nano package. Then write hello.html code file.
+ 
+
+
+
+
+
+
+then 
+nano hello.html
+
+
+
+To check 
+
+curl localhost/hello.html
+
+
+
+So if curl shows you a code, it means you are looking at the HTTP response status from the server.
+
+
+Now if you paste ip in browser it will not show html page, there will be error.
+
+   1  set hostnamectl set-hostname DockerServer
+    2  hostname
+    3  set hostnamectl hostname DockerServer
+    4  hostname
+    5  clear
+    6  sudo hostnamectl set-hostname DockerServer
+    7  hostname
+    8  exit
+    9  sudo apt-get update -y
+   10  sudo apt-get upgrade -y
+   11  sudo apt-get install docker.io -y
+   12  sudo systemctl start docker
+   13  sudo systemctl enable docker
+   14  sudo systemctl status docker
+   15  docker --version
